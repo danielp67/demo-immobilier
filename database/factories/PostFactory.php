@@ -21,6 +21,7 @@ class PostFactory extends Factory
             'user_id' => User::factory(),
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
+            'category_id' => $this->faker->numberBetween(1, 6),
         ];
     }
 }

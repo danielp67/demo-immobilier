@@ -15,6 +15,23 @@
             </div>
 
             <div class="mb-4">
+                <label for="category" class="block text-sm font-medium text-gray-700">Catégorie</label>
+                <select
+                    id="category"
+                    v-model="form.category_id"
+                    class="text-black mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    required
+                >
+                    <option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="category.id"
+                    >
+                        {{ category.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-4">
                 <label for="body" class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea
                     id="body"
@@ -43,12 +60,15 @@ import { router } from '@inertiajs/vue3'
 export default {
     props: {
       //  post: Object,
+        categories: Array,
+
     },
     data() {
         return {
             form: {
                 title: '',
                 body: '',
+                category_id: 1,
             },
         };
     },

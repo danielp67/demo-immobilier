@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Inertia\Inertia;
 
@@ -15,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('Posts', [
-            'posts' => Post::all()->toArray()
+            'posts' => Post::all()->toArray(),
         ]);
     }
 
@@ -25,6 +26,7 @@ class PostController extends Controller
     public function create()
     {
         return Inertia::render('New', [
+            'categories' => Category::all()->toArray()
         ]);
     }
 
@@ -41,6 +43,7 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id,
             'user_id' => 1,
             ]);
 
@@ -55,6 +58,7 @@ class PostController extends Controller
     {
         return Inertia::render('Detail', [
             'post' => Post::find($id)->toArray(),
+            'categories' => Category::all()->toArray()
         ]);
     }
 
@@ -65,6 +69,7 @@ class PostController extends Controller
     {
         return Inertia::render('Edit', [
             'post' => Post::find($id)->toArray(),
+            'categories' => Category::all()->toArray()
         ]);
     }
 
@@ -76,9 +81,15 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        Post::find($id)->update($request->only('title', 'body'));
+        Post::find($id)->update(
+            [
+            'title' => $request->title,
+            'body' => $request->body,
+            'category_id' => $request->category_id,
+            ]);
 
         return redirect()->route('posts.index')->with('success', 'Bien modifié avec succès.');
 
