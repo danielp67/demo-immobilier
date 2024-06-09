@@ -1,8 +1,8 @@
 <template>
     <div class="post-edit">
-        <h1>Modification du bien : {{ post.title }}</h1>
+        <h1>Ajout d'un nouveau bien</h1>
 
-        <form @submit.prevent="update">
+        <form @submit.prevent="create">
             <div class="mb-4">
                 <label for="title" class="block text-sm font-medium text-gray-700">Titre</label>
                 <input
@@ -42,19 +42,19 @@ import { router } from '@inertiajs/vue3'
 
 export default {
     props: {
-        post: Object,
+      //  post: Object,
     },
     data() {
         return {
             form: {
-                title: this.post.title,
-                body: this.post.body,
+                title: '',
+                body: '',
             },
         };
     },
     methods: {
-        update() {
-            router.put(`/posts/${this.post.id}`, this.form);
+        create() {
+            router.post(`/posts`, this.form);
         }
     },
 };

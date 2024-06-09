@@ -2,6 +2,10 @@
 <template>
   <div class="post-list">
     <h1>Liste des biens : {{ posts.length }}</h1>
+      <div class="flex gap-4">
+          <a href="/">Accueil</a>
+          <a href="/posts/new">Ajouter un bien</a>
+      </div>
     <div v-if="posts.length" class="posts">
       <div v-for="post in posts" :key="post.id" class="post">
         <h2>{{ post.title }}</h2>
