@@ -1,11 +1,10 @@
 
 <template>
   <div class="post-list">
-    <h1>Liste des biens</h1>
+    <h1>Liste des biens : {{ posts.length }}</h1>
     <div v-if="posts.length" class="posts">
       <div v-for="post in posts" :key="post.id" class="post">
         <h2>{{ post.title }}</h2>
-        <p>{{ post.excerpt }}</p>
         <a :href="`/posts/${post.id}`">Read more</a>
       </div>
     </div>

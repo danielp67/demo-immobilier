@@ -14,10 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->toArray();
         return Inertia::render('Posts', [
-            'hello' => 'world',
-            'posts' => $posts
+            'posts' => Post::all()->toArray()
         ]);
     }
 
@@ -40,25 +38,37 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(int $id)
     {
-        //
+        return Inertia::render('Detail', [
+            'post' => Post::find($id)->toArray(),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(int $id)
     {
-        //
+        return Inertia::render('Edit', [
+            'post' => Post::find($id)->toArray(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, int $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        Post::find($id)->update($request->only('title', 'body'));
+
+        return redirect()->route('posts.index')->with('success', 'Bien modifié avec succès.');
+
     }
 
     /**
