@@ -9,11 +9,11 @@
     <div v-if="posts.length" class="posts">
       <div v-for="post in posts" :key="post.id" class="post">
         <h2>{{ post.title }}</h2>
-        <a :href="`/posts/${post.id}`">Read more</a>
+        <a :href="`/posts/${post.id}`">Voir plus ...</a>
       </div>
     </div>
     <div v-else>
-      <p>No posts available.</p>
+      <p>Pas de bien disponible.</p>
     </div>
   </div>
 </template>
